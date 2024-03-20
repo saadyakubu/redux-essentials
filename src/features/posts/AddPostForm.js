@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { nanoid } from "@reduxjs/toolkit"
 
 import { addNewPost } from "./postsSlice"
+import { selectAllUsers } from "../users/usersSlice"
 
 
 export const AddPostForm = () => {
@@ -14,7 +15,7 @@ export const AddPostForm = () => {
 
     const dispatch = useDispatch()
     //const user = useSelector(state=>state.users.find(users=>users.id===userId))
-    const users = useSelector(state => state.users)
+    const users = useSelector(selectAllUsers)//useSelector(state => state.users)
 
     const onTitleChanged = e => setTitle(e.target.value)
     const onContentChanged = e => setContent(e.target.value)
