@@ -5,10 +5,11 @@ import TimeAgo from "./TimeAgo"
 import { PostAuthor } from "./PostAuthor"
 import { ReactionButtons } from "./ReactionButtons"
 
-import { selectAllPosts, fetchPosts } from "./postsSlice"
+import { selectAllPosts, fetchPosts, selectPostIds, selectPostById } from "./postsSlice"
 import { Spinner } from "../../components/Spinner"
 
-let PostExcerpt = ({ post }) => {
+let PostExcerpt = ({ postId }) => { //let PostExcerpt = ({ post }) => {
+    const post = useSelector(state => selectPostById(state, postId))
     return (
         <article className="post-excerpt">
             <h3>{post.title}</h3>
@@ -28,7 +29,8 @@ PostExcerpt = React.memo(PostExcerpt) //only re-renders when one of the props ch
 
 export const PostsList = () => {
     const dispatch = useDispatch()
-    const posts = useSelector(selectAllPosts)//useSelector(state=>state.posts)
+    //const posts = useSelector(selectAllPosts)//useSelector(state=>state.posts)
+    const orderedPostIds = useSelector(selectPostIds)
 
     const postStatus = useSelector(state => state.posts.status)
     const error = useSelector(state => state.posts.error)
@@ -47,10 +49,13 @@ export const PostsList = () => {
     else if(postStatus === 'succeeded') {
 
         //sort post in reverse chronological order by datetime string
-        const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+        // const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
 
-        content = orderedPosts.map(post => (
-            <PostExcerpt key={post.id} post={post} />
+        // content = orderedPosts.map(post => (
+        //     <PostExcerpt key={post.id} post={post} />
+        // ))
+        content = orderedPostIds.map(postId => (
+            <PostExcerpt key={postId} postId={postId} />
         ))
 
     }
