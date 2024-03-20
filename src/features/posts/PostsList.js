@@ -24,7 +24,7 @@ let PostExcerpt = ({ post }) => {
     )
 }
 
-PostExcerpt = useMemo(PostExcerpt) //only re-renders when one of the props changes 
+PostExcerpt = React.memo(PostExcerpt) //only re-renders when one of the props changes 
 
 export const PostsList = () => {
     const dispatch = useDispatch()
